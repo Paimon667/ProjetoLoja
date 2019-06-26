@@ -49,7 +49,7 @@ public class Teste extends JFrame implements Serializable {
 		produtoz = new HashMap<Integer, Produto>(); // testando
 		selecionados = new ArrayList<Produto>();
 		abas = new JTabbedPane();
-		AcessoGerente = true;
+		AcessoGerente = false;
 		fileMenu = new JMenu("Arquivo");
 		item = new JMenuItem("Salvar");
 		apagar = new JMenuItem("Apagar");
