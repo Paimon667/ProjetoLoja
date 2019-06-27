@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -53,14 +54,24 @@ public class Carrinho extends JPanel {
 		this.total = new JLabel("Total R$: " + total);
 		this.total.setFont(new Font("TimesRoman",Font.BOLD,20));
 		organizar.add(Box.createHorizontalStrut(20));
+		organizar.add(new JLabel(new ImageIcon(getClass().getResource("carrinho.png"))));
+		organizar.add(Box.createHorizontalStrut(20));
 		organizar.add(comprar);
 		organizar.add(Box.createHorizontalStrut(20));
 		organizar.add(remover);
 		organizar.add(Box.createHorizontalStrut(20));
 		organizar.add(this.total);
-		b.add(Box.createVerticalStrut(60));
+		b.add(Box.createVerticalStrut(29));
+        JLabel labeltopo = new JLabel("Seu carrinho de compras:                               ");
+        labeltopo.setFont(new Font("TimesRoman",Font.BOLD,20));
+        JLabel infor = new JLabel("Seu carrinho possui "+produtos.size()+" produtos                ");
+        infor.setFont(new Font("TimesRoman",Font.BOLD,15));
+        b.add(labeltopo);
+  
+        b.add(Box.createVerticalStrut(29));
 		b.add((new JScrollPane(lista)));
-		b.add(Box.createVerticalStrut(200));
+		b.add(infor);
+		b.add(Box.createVerticalStrut(160));
 		b.add(organizar);
 		add(b);
 	}
