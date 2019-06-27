@@ -2,11 +2,15 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Formatter;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -33,8 +37,8 @@ public class ConfirmarCompra extends JFrame {
 		cpf = new JTextField(4);
 		cartao = new JTextField(4);
 		senha = new JPasswordField(4);
-		Finalizar = new JButton("Finalizar Compra");
-		Cancelar = new JButton("Cancelar");
+		Finalizar = new JButton("Finalizar Compra");	
+     	Cancelar = new JButton("Cancelar");
 		Cancelar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent x) {
@@ -42,34 +46,33 @@ public class ConfirmarCompra extends JFrame {
 			}
 
 		});
-		
+
 		Box Nome = Box.createHorizontalBox();
 		Nome.add(nome);
 		Nome.add(Box.createHorizontalStrut(10));
 		Nome.add(new JLabel("Nome     "));
-		
+
 		Box Cpf = Box.createHorizontalBox();
 		Cpf.add(cpf);
 		Cpf.add(Box.createHorizontalStrut(10));
 		Cpf.add(new JLabel("CPF         "));
-		
+
 		Box Cartao = Box.createHorizontalBox();
 		Cartao.add(cartao);
 		Cartao.add(Box.createHorizontalStrut(10));
 		Cartao.add(new JLabel("CD Cartão           "));
-		
+
 		Box Senha = Box.createHorizontalBox();
 		Senha.add(senha);
 		Senha.add(Box.createHorizontalStrut(10));
 		Senha.add(new JLabel("Senha                                            "));
-		
+
 		Box Botoes = Box.createHorizontalBox();
 		Botoes.add(Box.createHorizontalStrut(10));
 		Botoes.add(Finalizar);
 		Botoes.add(Box.createHorizontalStrut(10));
 		Botoes.add(Cancelar);
-		
-		
+
 		b.add(Box.createVerticalStrut(17));
 		JTextArea texto = new JTextArea();
 		texto.setEditable(false);
@@ -88,7 +91,7 @@ public class ConfirmarCompra extends JFrame {
 		b.add(Box.createVerticalStrut(10));
 		b.add(Botoes);
 		b.add(Box.createVerticalStrut(10));
-		add(b,BorderLayout.WEST);
+		add(b, BorderLayout.WEST);
 
 	}
 
