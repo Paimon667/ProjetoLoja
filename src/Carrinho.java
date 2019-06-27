@@ -1,8 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,13 +22,20 @@ public class Carrinho extends JPanel {
 	String[] produtoz;
 
 	public Carrinho(ArrayList<Produto> produtos) {
+		setLayout(new FlowLayout());
+		Box b = Box.createVerticalBox();
 		lista = new JList();
 		produtoz = new String[20];
 		int total = 0;
 		int i = 0;
-		if (produtos.size() > 0) {
+		if (produtos.size() > 0) { 
 			for (Produto p : produtos) {
-				produtoz[i] = p.getNome() + " .............. R$: " + p.getPreco();
+				char[] espacos = new char[20-p.getNome().length()];
+				for(int j=0;j<20-p.getNome().length();j++) {
+					espacos[j]=' ';
+				}
+				String espacamento = new String(espacos);
+				produtoz[i] = p.getNome() +espacamento+"R$"+ p.getPreco();
 				i++;
 				total += p.getPreco();
 			}
@@ -33,15 +43,26 @@ public class Carrinho extends JPanel {
 		lista.setListData(produtoz);
 		lista.setVisibleRowCount(10);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lista.setFixedCellHeight(30);
-		lista.setFixedCellWidth(100);
+		lista.setFixedCellHeight(20);
+		lista.setFixedCellWidth(350);
+		Box organizar = Box.createHorizontalBox();
 		comprar = new JButton("Comprar");
+		comprar.setFont(new Font("AmericanTypewriter",Font.ITALIC,17));
 		remover = new JButton("Remover");
-		this.total = new JLabel("R$: " + total);
-		add(new JScrollPane(lista), BorderLayout.EAST);
-		add(this.total, BorderLayout.WEST);
-		add(comprar, BorderLayout.NORTH);
-		add(remover, BorderLayout.SOUTH);
+		remover.setFont(new Font("AmericanTypewriter",Font.ITALIC,17));
+		this.total = new JLabel("Total R$: " + total);
+		this.total.setFont(new Font("TimesRoman",Font.BOLD,20));
+		organizar.add(Box.createHorizontalStrut(20));
+		organizar.add(comprar);
+		organizar.add(Box.createHorizontalStrut(20));
+		organizar.add(remover);
+		organizar.add(Box.createHorizontalStrut(20));
+		organizar.add(this.total);
+		b.add(Box.createVerticalStrut(60));
+		b.add((new JScrollPane(lista)));
+		b.add(Box.createVerticalStrut(200));
+		b.add(organizar);
+		add(b);
 	}
 
 }

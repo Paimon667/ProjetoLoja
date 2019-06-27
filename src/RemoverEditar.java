@@ -1,10 +1,14 @@
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class RemoverEditar extends JPanel {
@@ -15,16 +19,15 @@ public class RemoverEditar extends JPanel {
 	JButton editarNome;
 	JTextField Usuario;
 	JPasswordField senha;
-	JButton login;
 	JButton procurar;
 	JLabel imagem;
 	JLabel pn;
-	
+
 	public RemoverEditar(boolean Gerente) {
 
 		this.setLayout(new FlowLayout());
-		
-		if(Gerente) {
+
+		if (Gerente) {
 			Box box = Box.createVerticalBox();
 			box.add(new JLabel("Insira o Código do Produto"));
 			box.add(Box.createVerticalStrut(5));
@@ -46,23 +49,61 @@ public class RemoverEditar extends JPanel {
 			box.add(box.createVerticalStrut(15));
 			box.add(editarPreco);
 			box.add(box.createVerticalStrut(15));
-			box.add(editarNome);	
+			box.add(editarNome);
 			this.add(box);
 		}
-		
+
 		else {
+			Usuario = new JTextField(15);
 			Box box = Box.createVerticalBox();
-			Usuario = new JTextField(10);
-			senha = new JPasswordField(10);
-			login = new JButton("Login");
-			box.add(Usuario);
-			box.add(box.createVerticalStrut(5));
-			box.add(senha);
-			box.add(box.createVerticalStrut(5));
-			box.add(login);
-			this.add(box);
+			
+			box.add(box.createVerticalStrut(30));
+			
+			JLabel bemvindo = new JLabel("       Bem Vindo ! ");
+			bemvindo.setFont(new Font("SansSerif",Font.BOLD,30));
+			box.add(bemvindo);
+			box.add(box.createVerticalStrut(10));
+			
+			JPanel org = new JPanel(new FlowLayout());
+			
+			JLabel login = new JLabel(new ImageIcon(getClass().getResource("login.png")));
+
+			org.add(login);
+			box.add(org);
+			
+			box.add(box.createVerticalStrut(30));
+			JLabel digite = new JLabel(" Digite seu usuário e senha para continuar");
+			digite.setFont(new Font("SansSerif",Font.BOLD,15));
+			box.add(digite);
+			
+			box.add(box.createVerticalStrut(10));
+			
+
+			JPanel logarU = new JPanel(new FlowLayout());
+			logarU.add(new JLabel(new ImageIcon(getClass().getResource("user.png"))));
+			logarU.add(Usuario);
+			box.add(logarU);
+
+			JPanel logarS = new JPanel(new FlowLayout());
+			senha = new JPasswordField(15);
+			logarS.add(new JLabel(new ImageIcon(getClass().getResource("cadeado.png"))));
+			logarS.add(senha);
+			box.add(logarS);
+			box.add(box.createVerticalStrut(150));
+			
+			this.add(box.createVerticalStrut(30), BorderLayout.WEST);
+			this.add(box.createVerticalStrut(30), BorderLayout.EAST);
+			
+			JTextArea txt = new JTextArea("Acesso restrito, apenas pessoal autorizado");
+			txt.setFont(new Font("Serif",Font.BOLD,20));
+			txt.setEditable(false);
+			txt.setBackground(this.getBackground());
+			txt.setSelectionColor(this.getBackground());
+			
+			this.add(box, BorderLayout.CENTER);
+			this.add(txt,BorderLayout.SOUTH);
 		}
-		
+
 	}
 
 }

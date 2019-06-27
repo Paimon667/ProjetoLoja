@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -15,7 +16,10 @@ import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,79 +28,93 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-public class Teste extends JFrame implements Serializable {
+public class JanelaPrincipal extends JFrame implements Serializable {
 
-	Map<Integer, Produto> produtoz; // testando
-	ArrayList<Produto> selecionados;
-	Catalogo catalogo;
-	Adicionar adicionar;
-	Carrinho carrinho;
-	RemoverEditar edit;
-	JTabbedPane abas;
-	boolean AcessoGerente;
-	JMenu fileMenu;
-	JMenuItem item;
-	JMenuItem apagar;
-	JMenuBar menu;
-	AdicionarCarrinho add = new AdicionarCarrinho();
-	int posicao = 404;
+	Map<Integer, Produto> produtoz;  // produtos que tem no catalogo 
+	ArrayList<Produto> selecionados; // produtos que estao no carrinho do cliente
+	Catalogo catalogo;               // panel catalogo que exibe os produtos
+	Adicionar adicionar;			 // panel adicionar para adicionar novos produtos
+	Carrinho carrinho;               // panel carrinho para ver os produtos escolhidos e seu preço final
+	RemoverEditar edit;				 // panel para remover ou editar produtos
+	JTabbedPane abas;                // as abas para fixar os panels no frame principal (esse)
+	boolean AcessoGerente;			 // boolean permitindo acesso à funções especiais (editar/remover/adicionar)
+	JMenu MenuPrincipal;			 // um menu para adicionar as opções
+	JMenuItem salvar;				 // opção de salvar no menu principal
+	JMenuItem apagar;				 // opcao de apagar no menu principal
+	JMenuBar menu;                   // menu principal 
+	int posicao = 404;               // posição inicial é usada no procurar produto na aba editar para dar erro caso não encontre o produto
 
-	public Teste() {
+	public JanelaPrincipal() {
 
+		// instancio os objectos e coloco-os em seus devidos lugares
+		
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setSize(600, 600);
-		this.setVisible(true);
-		produtoz = new HashMap<Integer, Produto>(); // testando
+		this.setResizable(false);
+		produtoz = new HashMap<Integer, Produto>(); 
 		selecionados = new ArrayList<Produto>();
 		abas = new JTabbedPane();
 		AcessoGerente = false;
-		fileMenu = new JMenu("Arquivo");
-		item = new JMenuItem("Salvar");
-		apagar = new JMenuItem("Apagar");
-		fileMenu.add(item);
-		fileMenu.add(apagar);
+		MenuPrincipal = new JMenu("Arquivo");
+		salvar = new JMenuItem("Salvar");
+		apagar = new JMenuItem("Apagar"); 
+		MenuPrincipal.add(salvar);
+		MenuPrincipal.add(apagar);
 		menu = new JMenuBar();
-		menu.add(fileMenu);
-		setJMenuBar(menu);
-		A();
-		//
+		menu.add(MenuPrincipal);
+		setJMenuBar(menu); 
+		A();	
 		this.add(abas);
 	}
 
+	// recebe um produto e adiciona-o ao map de produtos do catalogo, sendo atribuido como chave o seu código
 	public void AdicionarProduto(Produto produto) {
-		produtoz.put(produto.getCodigo(), produto); // testando
+		produtoz.put(produto.getCodigo(), produto);
 	}
-
-	public void R() { // remover panels
+	
+	// remove todas as abas
+	public void R() { 
 		abas.remove(catalogo);
 		abas.remove(adicionar);
 		abas.remove(edit);
 		abas.remove(carrinho);
 	}
-
-	public void A() { // colocar panels
+	
+	// reinstancia todos os panels e adiciona-os às abas novamente
+	public void A() { 
 		carrinho = new Carrinho(selecionados);
-	    carrinho.remover.addActionListener(new RemoverCarrinho());
+		carrinho.remover.addActionListener(new RemoverCarrinho());
+		carrinho.comprar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent x) {
+				
+				ConfirmarCompra c = new ConfirmarCompra();
+				
+			}
+			
+			
+		});
 		catalogo = new Catalogo(produtoz);
 		abas.addTab("Catalogo", catalogo);
 		adicionar = new Adicionar(AcessoGerente);
 		edit = new RemoverEditar(AcessoGerente);
-		if (AcessoGerente) {
+		if (AcessoGerente) { // há panels que tem certo comportamento quando a variavel gerente é true
 			adicionar.Adicionar.addActionListener(new AdicionarAdd());
 			edit.procurar.addActionListener(new editar());
 			edit.remover.addActionListener(new editar());
 			edit.editarPreco.addActionListener(new editar());
 			edit.editarNome.addActionListener(new editar());
 		} else {
-			adicionar.login.addActionListener(new LoginGerente());
-			edit.login.addActionListener(new LoginGerente());
+			adicionar.senha.addActionListener(new LoginGerente());
+			edit.senha.addActionListener(new LoginGerente());
 		}
 		abas.addTab("Carrinho", carrinho);
 		abas.addTab("Adicionar", adicionar);
 		abas.addTab("Editar", edit);
 
 	}
-
+	
+	// recebe todos os valores colocados nos campos de digitação da aba Adicionar e cria um produto, caso algo seja preenchido incorretamente ele dá erro
 	public class AdicionarAdd implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -111,7 +129,7 @@ public class Teste extends JFrame implements Serializable {
 				botao.setToolTipText("Produto: " + codigo);
 				botao.setBackground(new Color(238, 238, 238));
 				botao.setForeground(new Color(238, 238, 238));
-				botao.addActionListener(add);
+				botao.addActionListener(new AdicionarCarrinho());
 				AdicionarProduto(new Produto(nome, preco, codigo, botao, adicionar.file.getPath()));
 				int foco = abas.getSelectedIndex();
 				R();
@@ -126,6 +144,7 @@ public class Teste extends JFrame implements Serializable {
 
 	}
 
+	// checa se os valores colocados nos campos de login e senha estão corretos e altera a variavel acesso gerente para true caso sim
 	public class LoginGerente implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -148,6 +167,8 @@ public class Teste extends JFrame implements Serializable {
 		}
 	}
 
+	// lê o valor colocado no campo de pesquisa e procura o produto em questão, se encontrar, exibirá seu valor, nome e imagem e será permitido alterar algo dele
+	// caso não encontre ele permanece com a posição 404 definida no inicio do código para lançar uma exceção posteriormente caso tente alterar algo
 	public class editar implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -163,7 +184,7 @@ public class Teste extends JFrame implements Serializable {
 						posicao = i;
 						edit.imagem.setText("");
 						edit.imagem.setIcon(new ImageIcon(produtoz.get(posicao).getImagem()));
-						edit.pn.setText(produtoz.get(posicao).getNome() + "  R$ " + produtoz.get(posicao).getPreco());
+						edit.pn.setText(produtoz.get(posicao).getNome() + "    R$: " + produtoz.get(posicao).getPreco());
 						break;
 					}
 				}
@@ -185,7 +206,7 @@ public class Teste extends JFrame implements Serializable {
 						String nome = JOptionPane.showInputDialog("Digite o novo nome");
 						produtoz.get(posicao).setNome(nome);
 						produtoz.get(posicao).texto
-								.setText(produtoz.get(posicao).getNome() + " R$: " + produtoz.get(posicao).getPreco());
+								.setText(produtoz.get(posicao).getNome() + "    R$: " + produtoz.get(posicao).getPreco());
 						posicao = 404;
 						int foco = abas.getSelectedIndex();
 						R();
@@ -195,7 +216,7 @@ public class Teste extends JFrame implements Serializable {
 						int preco = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo preço"));
 						produtoz.get(posicao).setPreco(preco);
 						produtoz.get(posicao).texto
-								.setText(produtoz.get(posicao).getNome() + " R$: " + produtoz.get(posicao).getPreco());
+								.setText(produtoz.get(posicao).getNome() + "    R$: " + produtoz.get(posicao).getPreco());
 						posicao = 404;
 						int foco = abas.getSelectedIndex();
 						R();
@@ -217,6 +238,7 @@ public class Teste extends JFrame implements Serializable {
 
 	}
 
+	// remove produtos da lista de produtos do carrinho
 	public class RemoverCarrinho implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -237,6 +259,7 @@ public class Teste extends JFrame implements Serializable {
 
 	}
 
+	// adiciona produtos do catalogo a lista de carrinho
 	public class AdicionarCarrinho implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {

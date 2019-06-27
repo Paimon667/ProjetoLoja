@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.io.File;
 
 import javax.swing.Icon;
@@ -61,11 +62,12 @@ public class Produto extends JPanel implements ProdutoGenerico {
 	public Produto(String nome, int preco, int codigo, JButton botaocomprar,String imagem) {
 		this.Nome=nome;
 		this.Preco=preco;
-		this.Codigo=codigo;
+		this.Codigo=codigo; 
 		this.imagem=imagem;
 		this.comprar=botaocomprar;
 		setLayout(new FlowLayout());
-		texto = new JLabel(this.Nome+" R$: "+this.Preco,10);
+		texto = new JLabel(this.Nome+"    R$: "+this.Preco);
+		texto.setFont(new Font("AppleGhotic",Font.PLAIN,12));
 		add(botaocomprar);
 		add(texto);
 		
