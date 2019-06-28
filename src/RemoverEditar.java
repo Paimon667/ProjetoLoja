@@ -29,7 +29,7 @@ public class RemoverEditar extends JPanel {
 
 		if (Gerente) {
 			Box box = Box.createVerticalBox();
-			box.add(new JLabel("Insira o Código do Produto"));
+			box.add(new JLabel("Insira o Codigo do Produto"));
 			box.add(Box.createVerticalStrut(5));
 			codigo = new JTextField(10);
 			box.add(codigo);
@@ -43,7 +43,7 @@ public class RemoverEditar extends JPanel {
 			box.add(pn);
 			box.add(box.createVerticalStrut(40));
 			remover = new JButton("Remover");
-			editarPreco = new JButton("Editar Preço");
+			editarPreco = new JButton("Editar Preco");
 			editarNome = new JButton("Editar Nome");
 			box.add(remover);
 			box.add(box.createVerticalStrut(15));
@@ -72,7 +72,7 @@ public class RemoverEditar extends JPanel {
 			box.add(org);
 			
 			box.add(box.createVerticalStrut(30));
-			JLabel digite = new JLabel(" Digite seu usuário e senha para continuar");
+			JLabel digite = new JLabel(" Digite seu usuario e senha para continuar");
 			digite.setFont(new Font("SansSerif",Font.BOLD,15));
 			box.add(digite);
 			

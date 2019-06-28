@@ -22,7 +22,7 @@ public class Adicionar extends JPanel {
 	JTextField[] campo;
 	JLabel[] palavras;
 	JPanel[] paineis;
-	String[] strings = { "Nome", "Preço", "Código" };
+	String[] strings = { "Nome", "Preco", "Codigo" };
 	JButton Adicionar;
 	JLabel ImgEscolhida;
 	JButton Imagem;
@@ -34,7 +34,7 @@ public class Adicionar extends JPanel {
 	public Adicionar(boolean Gerente) {
 		this.setLayout(new FlowLayout());
 
-		// Se quem acessa é o gerente
+		// Se quem acessa ï¿½ o gerente
 		if (Gerente) {
 			Box boxEs = Box.createVerticalBox();
 			campo = new JTextField[3];
@@ -60,8 +60,8 @@ public class Adicionar extends JPanel {
 			this.add(boxEs);
 			ImgEscolhida = new JLabel("Nenhuma Imagem Selecionada");
 			this.add(ImgEscolhida);
-			JTextArea texto = new JTextArea("É recomendado "
-					+ "que as imagens \nestejam armazenadas em uma pasta específica \ne que não possa ser movida, \nalém do que, as imagens devem ter obrigatóriamente 50x50 pixels");
+			JTextArea texto = new JTextArea("eh recomendado "
+					+ "que as imagens \nestejam armazenadas em uma pasta especifica \ne que nao possa ser movida, \nalem do que, as imagens devem ter obrigatariamente 50x50 pixels");
 			texto.setEditable(false);
 			texto.setBackground(this.getBackground());
 			texto.setSelectionColor(this.getBackground());
@@ -88,7 +88,7 @@ public class Adicionar extends JPanel {
 			box.add(org);
 			
 			box.add(box.createVerticalStrut(30));
-			JLabel digite = new JLabel(" Digite seu usuário e senha para continuar");
+			JLabel digite = new JLabel(" Digite seu usuario e senha para continuar");
 			digite.setFont(new Font("SansSerif",Font.BOLD,15));
 			box.add(digite);
 			

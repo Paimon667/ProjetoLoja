@@ -18,6 +18,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -49,7 +50,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 	public JanelaPrincipal() {
 
 		// instancio os objectos e coloco-os em seus devidos lugares
-
+		super("Sistema digital da P.O.S");
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setSize(600, 600);
 		this.setResizable(false);
@@ -182,7 +183,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				A();
 				abas.setSelectedIndex(foco);
 			} else {
-				JOptionPane.showMessageDialog(null, "Usu�rio ou senha inv�lido");
+				JOptionPane.showMessageDialog(null, "Usuario ou senha invalido");
 			}
 
 		}
@@ -200,7 +201,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			if (x.getSource() == edit.procurar) {
 
 				if (produtoz.size() == 0) {
-					JOptionPane.showMessageDialog(null, "N�o existem produtos cadastrados");
+					JOptionPane.showMessageDialog(null, "Nao existem produtos cadastrados");
 				}
 
 				for (Integer i : produtoz.keySet()) {
@@ -238,7 +239,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 						A();
 						abas.setSelectedIndex(foco);
 					} else if (x.getSource() == edit.editarPreco) {
-						int preco = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo pre�o"));
+						int preco = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo preco"));
 						produtoz.get(posicao).setPreco(preco);
 						produtoz.get(posicao).texto.setText(
 								produtoz.get(posicao).getNome() + "    R$: " + produtoz.get(posicao).getPreco());
@@ -251,7 +252,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				}
 
 				catch (NumberFormatException erro) {
-					JOptionPane.showMessageDialog(null, "Valor inv�lido inserido");
+					JOptionPane.showMessageDialog(null, "Valor invalido inserido");
 				}
 
 				catch (Exception erro) {
@@ -314,20 +315,25 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			cartaoI = Integer.parseInt(cartao);
 			senhaI = Integer.parseInt(senha);
 			String nomeI = nome;
-			// if(senhaI<100 || cartaoI < 100000 || cpfI<1000000000) { // se digitar senha
-			// com menos de 3 digitos ou cartao com menos de 6 ou cpf menos de 10
-			// throw new Exception();
-			// }
-
-			Formatter escrever = new Formatter("NotaFiscal.txt");
-			escrever.format("%s\n", "                          NOME DA LOJA");
-			escrever.format("%s\n%s\n%s\n", "Nome: " + nomeI, "Cart�o: " + cartaoI, "CPF: " + cpfI);
+			if(senhaI<100 || cartaoI<100000 || cpfI<1000000000 || nome.length()<3) { // se digitar senha
+			//diferente de 3 digitos ou cartao com menos de 6 ou cpf menos de 10
+			throw new Exception();
+			}
+			JFileChooser EscolheDiretorio = new JFileChooser();
+			EscolheDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			EscolheDiretorio.setDialogTitle("Escolha o local para salvar sua Nota Fiscal");
+			EscolheDiretorio.showSaveDialog(this);
+			
+			String diretorio = EscolheDiretorio.getSelectedFile().getPath();
+			Formatter escrever = new Formatter(diretorio+"/NotaFiscal.txt");
+			escrever.format("%s\n", "----------------------------LOJA P.O.S------------------------");
+			escrever.format("%s\n%s\n%s\n", "Nome: " + nomeI, "Cartao: " + cartaoI, "CPF: " + cpfI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "                            NOTA FISCAL");
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			int contador = 1;
 			int precoI = 0;
-			for (Produto p : selecionados) {
+			for (Produto p : selecionados) { 
 				escrever.format("%d %s\n", contador, "Cod: " + p.getCodigo() + " - - - - - - - - - - " + p.getNome());
 				contador++;
 				precoI += p.getPreco();
@@ -336,9 +342,9 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			escrever.format("%s\n", "                                            Total: R$" + precoI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "CNPJ: 985.154.584");
-			escrever.format("%s\n", "NOME DA EMPRESA");
+			escrever.format("%s\n", "P.O.S LTDA");
 			escrever.format("%s\n", "--------------------------------------------------------------");
-			escrever.format("%s\n", "Obrigado pela Prefer�ncia");
+			escrever.format("%s\n", "Obrigado pela Preferencia");
 			escrever.close();
 			JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
 			c.dispose();
