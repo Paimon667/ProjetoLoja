@@ -35,16 +35,16 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 	ArrayList<Produto> selecionados; // produtos que estao no carrinho do cliente
 	Catalogo catalogo; // panel catalogo que exibe os produtos
 	Adicionar adicionar; // panel adicionar para adicionar novos produtos
-	Carrinho carrinho; // panel carrinho para ver os produtos escolhidos e seu preço final
+	Carrinho carrinho; // panel carrinho para ver os produtos escolhidos e seu preï¿½o final
 	RemoverEditar edit; // panel para remover ou editar produtos
 	JTabbedPane abas; // as abas para fixar os panels no frame principal (esse)
-	boolean AcessoGerente; // boolean permitindo acesso à funções especiais (editar/remover/adicionar)
-	JMenu MenuPrincipal; // um menu para adicionar as opções
-	JMenuItem salvar; // opção de salvar no menu principal
+	boolean AcessoGerente; // boolean permitindo acesso ï¿½ funï¿½ï¿½es especiais (editar/remover/adicionar)
+	JMenu MenuPrincipal; // um menu para adicionar as opï¿½ï¿½es
+	JMenuItem salvar; // opï¿½ï¿½o de salvar no menu principal
 	JMenuItem apagar; // opcao de apagar no menu principal
 	JMenuBar menu; // menu principal
-	int posicao = 404; // posição inicial é usada no procurar produto na aba editar para dar erro caso
-						// não encontre o produto
+	int posicao = 404; // posiï¿½ï¿½o inicial ï¿½ usada no procurar produto na aba editar para dar erro caso
+						// nï¿½o encontre o produto
 
 	public JanelaPrincipal() {
 
@@ -53,24 +53,34 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setSize(600, 600);
 		this.setResizable(false);
-		produtoz = new HashMap<Integer, Produto>();
-		selecionados = new ArrayList<Produto>();
-		abas = new JTabbedPane();
-		AcessoGerente = false;
-		MenuPrincipal = new JMenu("Arquivo");
-		salvar = new JMenuItem("Salvar");
-		apagar = new JMenuItem("Apagar");
-		MenuPrincipal.add(salvar);
-		MenuPrincipal.add(apagar);
-		menu = new JMenuBar();
-		menu.add(MenuPrincipal);
-		setJMenuBar(menu);
-		A();
-		this.add(abas);
+		try {
+			ObjectInputStream ler = new ObjectInputStream(new FileInputStream("Save.ser"));
+			Save backup = (Save)ler.readObject();
+			produtoz = backup.produtoz;
+			selecionados = backup.selecionados;
+		} catch (Exception x) {
+			produtoz = new HashMap<Integer, Produto>();
+			selecionados = new ArrayList<Produto>();
+		} finally {
+			abas = new JTabbedPane();
+			AcessoGerente = false;
+			MenuPrincipal = new JMenu("Arquivo");
+			salvar = new JMenuItem("Salvar");
+			apagar = new JMenuItem("Apagar");
+			MenuPrincipal.add(salvar);
+			MenuPrincipal.add(apagar);
+			menu = new JMenuBar();
+			menu.add(MenuPrincipal);
+			salvar.addActionListener(new BotoesMenu());
+			apagar.addActionListener(new BotoesMenu());
+			setJMenuBar(menu);
+			A();
+			this.add(abas);
+		}
 	}
 
 	// recebe um produto e adiciona-o ao map de produtos do catalogo, sendo
-	// atribuido como chave o seu código
+	// atribuido como chave o seu cï¿½digo
 	public void AdicionarProduto(Produto produto) {
 		produtoz.put(produto.getCodigo(), produto);
 	}
@@ -83,7 +93,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		abas.remove(carrinho);
 	}
 
-	// reinstancia todos os panels e adiciona-os às abas novamente
+	// reinstancia todos os panels e adiciona-os ï¿½s abas novamente
 	public void A() {
 		carrinho = new Carrinho(selecionados);
 		carrinho.remover.addActionListener(new RemoverCarrinho());
@@ -95,7 +105,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				c.Finalizar.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent y) {
-						CriarNotaFiscal(c.nome.getText(), c.cpf.getText(), c.cartao.getText(), c.senha.getText(),c);
+						CriarNotaFiscal(c.nome.getText(), c.cpf.getText(), c.cartao.getText(), c.senha.getText(), c);
 					}
 
 				});
@@ -107,7 +117,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		abas.addTab("Catalogo", catalogo);
 		adicionar = new Adicionar(AcessoGerente);
 		edit = new RemoverEditar(AcessoGerente);
-		if (AcessoGerente) { // há panels que tem certo comportamento quando a variavel gerente é true
+		if (AcessoGerente) { // hï¿½ panels que tem certo comportamento quando a variavel gerente ï¿½ true
 			adicionar.Adicionar.addActionListener(new AdicionarAdd());
 			edit.procurar.addActionListener(new editar());
 			edit.remover.addActionListener(new editar());
@@ -123,8 +133,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 
 	}
 
-	// recebe todos os valores colocados nos campos de digitação da aba Adicionar e
-	// cria um produto, caso algo seja preenchido incorretamente ele dá erro
+	// recebe todos os valores colocados nos campos de digitaï¿½ï¿½o da aba Adicionar e
+	// cria um produto, caso algo seja preenchido incorretamente ele dï¿½ erro
 	public class AdicionarAdd implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -154,7 +164,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 
 	}
 
-	// checa se os valores colocados nos campos de login e senha estão corretos e
+	// checa se os valores colocados nos campos de login e senha estï¿½o corretos e
 	// altera a variavel acesso gerente para true caso sim
 	public class LoginGerente implements ActionListener {
 
@@ -172,17 +182,17 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				A();
 				abas.setSelectedIndex(foco);
 			} else {
-				JOptionPane.showMessageDialog(null, "Usuário ou senha inválido");
+				JOptionPane.showMessageDialog(null, "Usuï¿½rio ou senha invï¿½lido");
 			}
 
 		}
 	}
 
-	// lê o valor colocado no campo de pesquisa e procura o produto em questão, se
-	// encontrar, exibirá seu valor, nome e imagem e será permitido alterar algo
+	// lï¿½ o valor colocado no campo de pesquisa e procura o produto em questï¿½o, se
+	// encontrar, exibirï¿½ seu valor, nome e imagem e serï¿½ permitido alterar algo
 	// dele
-	// caso não encontre ele permanece com a posição 404 definida no inicio do
-	// código para lançar uma exceção posteriormente caso tente alterar algo
+	// caso nï¿½o encontre ele permanece com a posiï¿½ï¿½o 404 definida no inicio do
+	// cï¿½digo para lanï¿½ar uma exceï¿½ï¿½o posteriormente caso tente alterar algo
 	public class editar implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -190,7 +200,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			if (x.getSource() == edit.procurar) {
 
 				if (produtoz.size() == 0) {
-					JOptionPane.showMessageDialog(null, "Não existem produtos cadastrados");
+					JOptionPane.showMessageDialog(null, "Nï¿½o existem produtos cadastrados");
 				}
 
 				for (Integer i : produtoz.keySet()) {
@@ -228,7 +238,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 						A();
 						abas.setSelectedIndex(foco);
 					} else if (x.getSource() == edit.editarPreco) {
-						int preco = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo preço"));
+						int preco = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo preï¿½o"));
 						produtoz.get(posicao).setPreco(preco);
 						produtoz.get(posicao).texto.setText(
 								produtoz.get(posicao).getNome() + "    R$: " + produtoz.get(posicao).getPreco());
@@ -241,7 +251,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				}
 
 				catch (NumberFormatException erro) {
-					JOptionPane.showMessageDialog(null, "Valor inválido inserido");
+					JOptionPane.showMessageDialog(null, "Valor invï¿½lido inserido");
 				}
 
 				catch (Exception erro) {
@@ -304,38 +314,37 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			cartaoI = Integer.parseInt(cartao);
 			senhaI = Integer.parseInt(senha);
 			String nomeI = nome;
-			//if(senhaI<100 || cartaoI < 100000 || cpfI<1000000000) { // se digitar senha com menos de 3 digitos ou cartao com menos de 6 ou cpf menos de 10
-			//	throw new Exception();
-			//}
-			
+			// if(senhaI<100 || cartaoI < 100000 || cpfI<1000000000) { // se digitar senha
+			// com menos de 3 digitos ou cartao com menos de 6 ou cpf menos de 10
+			// throw new Exception();
+			// }
+
 			Formatter escrever = new Formatter("NotaFiscal.txt");
 			escrever.format("%s\n", "                          NOME DA LOJA");
-			escrever.format("%s\n%s\n%s\n", "Nome: " + nomeI, "Cartão: " + cartaoI, "CPF: " + cpfI);
+			escrever.format("%s\n%s\n%s\n", "Nome: " + nomeI, "Cartï¿½o: " + cartaoI, "CPF: " + cpfI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "                            NOTA FISCAL");
 			escrever.format("%s\n", "--------------------------------------------------------------");
-			int contador=1;
+			int contador = 1;
 			int precoI = 0;
-			for(Produto p:selecionados) {
-				escrever.format("%d %s\n",contador,"Cod: "+p.getCodigo()+" - - - - - - - - - - "+p.getNome());
+			for (Produto p : selecionados) {
+				escrever.format("%d %s\n", contador, "Cod: " + p.getCodigo() + " - - - - - - - - - - " + p.getNome());
 				contador++;
 				precoI += p.getPreco();
 			}
 			escrever.format("%s\n", "--------------------------------------------------------------");
-			escrever.format("%s\n","                                            Total: R$"+precoI);
+			escrever.format("%s\n", "                                            Total: R$" + precoI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
-			escrever.format("%s\n","CNPJ: 985.154.584");
+			escrever.format("%s\n", "CNPJ: 985.154.584");
 			escrever.format("%s\n", "NOME DA EMPRESA");
 			escrever.format("%s\n", "--------------------------------------------------------------");
-			escrever.format("%s\n",              "Obrigado pela Preferência");
+			escrever.format("%s\n", "Obrigado pela Preferï¿½ncia");
 			escrever.close();
 			JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
 			c.dispose();
 			selecionados = new ArrayList<Produto>();
 			R();
 			A();
-			
-			
 
 		} catch (Exception erro) {
 			JOptionPane.showMessageDialog(null, "Campos preenchidos incorretamente");
@@ -343,4 +352,38 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 
 	}
 
+	public class BotoesMenu implements ActionListener {
+		
+		public void actionPerformed(ActionEvent x) {
+			
+			if(x.getSource()==apagar) {
+				produtoz = new HashMap<Integer, Produto>();
+				selecionados = new ArrayList<Produto>();
+				try {
+					ObjectOutputStream escrever = new ObjectOutputStream(new FileOutputStream("Save.ser"));
+					escrever.writeObject(new Save(produtoz,selecionados));
+					escrever.close();
+				}
+				catch(Exception y) {
+					
+				}
+				R();
+				A();
+			}
+			
+			else {
+				try {
+				ObjectOutputStream escrever = new ObjectOutputStream(new FileOutputStream("Save.ser"));
+				escrever.writeObject(new Save(produtoz,selecionados));
+				escrever.close();
+				}
+				catch(Exception y) {
+					
+				}
+			}
+			
+		}
+		
+	}
+	
 }
