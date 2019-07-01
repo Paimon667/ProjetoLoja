@@ -1,8 +1,11 @@
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -13,15 +16,15 @@ public class Catalogo extends JPanel {
 		int l = 0;
 		int c = 0;
 		for (Integer i : produtoz.keySet()) {
-			if (c < 3) {
-				add(produtoz.get(i), l, c);
+			if(c<3) {
+				add(produtoz.get(i),l,c);
 				c++;
-			} else if (l < 3) {
-				c = 0;
-				add(produtoz.get(i), l, c);
+			}
+			if(c>2) {
+				c=0;
 				l++;
 			}
-			else {
+			if(l>2) {
 				break;
 			}
 		}

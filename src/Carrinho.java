@@ -31,12 +31,15 @@ public class Carrinho extends JPanel {
 		int i = 0;
 		if (produtos.size() > 0) { 
 			for (Produto p : produtos) {
-				char[] espacos = new char[20-p.getNome().length()];
-				for(int j=0;j<20-p.getNome().length();j++) {
-					espacos[j]=' ';
+				produtoz[i] = p.getNome()+"                                                       ";
+				char[] arrumar = produtoz[i].toCharArray();
+				arrumar[40]='R';
+				arrumar[41]='$';
+				String jota = ""+p.getPreco();
+				for(int zzz=43;zzz<jota.length()+43;zzz++) {
+					arrumar[zzz]=jota.charAt(zzz-43);
 				}
-				String espacamento = new String(espacos);
-				produtoz[i] = p.getNome() +espacamento+"R$"+ p.getPreco();
+				produtoz[i]= new String(arrumar);
 				i++;
 				total += p.getPreco();
 			}
@@ -45,7 +48,9 @@ public class Carrinho extends JPanel {
 		lista.setVisibleRowCount(10);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setFixedCellHeight(20);
-		lista.setFixedCellWidth(350);
+		lista.setFixedCellWidth(175);
+		lista.setToolTipText("Preco show");
+		
 		Box organizar = Box.createHorizontalBox();
 		comprar = new JButton("Comprar");
 		comprar.setFont(new Font("AmericanTypewriter",Font.ITALIC,17));
@@ -64,7 +69,8 @@ public class Carrinho extends JPanel {
 		b.add(Box.createVerticalStrut(29));
         JLabel labeltopo = new JLabel("Seu carrinho de compras:                               ");
         labeltopo.setFont(new Font("TimesRoman",Font.BOLD,20));
-        JLabel infor = new JLabel("Seu carrinho possui "+produtos.size()+" produtos                ");
+        JLabel infor = new JLabel(produtos.size()>1 || produtos.size()==0? "Seu carrinho possui "+produtos.size()+" produtos               "
+        		: "Seu carrinho possui "+produtos.size()+" produto");
         infor.setFont(new Font("TimesRoman",Font.BOLD,15));
         b.add(labeltopo);
   

@@ -15,94 +15,77 @@ public class RemoverEditar extends JPanel {
 
 	JTextField codigo;
 	JButton remover;
-	JButton editarPreco;
-	JButton editarNome;
-	JTextField Usuario;
-	JPasswordField senha;
+	JButton salvar;
+	JTextField NovoNome;
+	JTextField NovoPreco;
+	Login login;
 	JButton procurar;
 	JLabel imagem;
-	JLabel pn;
 
 	public RemoverEditar(boolean Gerente) {
 
 		this.setLayout(new FlowLayout());
 
 		if (Gerente) {
-			Box box = Box.createVerticalBox();
-			box.add(new JLabel("Insira o Código do Produto"));
-			box.add(Box.createVerticalStrut(5));
-			codigo = new JTextField(10);
-			box.add(codigo);
-			procurar = new JButton("Procurar");
-			box.add(box.createVerticalStrut(10));
-			box.add(procurar);
-			box.add(box.createVerticalStrut(40));
-			imagem = new JLabel("Nenhum produto selecionado");
-			box.add(imagem);
-			pn = new JLabel("");
-			box.add(pn);
-			box.add(box.createVerticalStrut(40));
+			Box central = Box.createVerticalBox();
+			central.add(Box.createVerticalStrut(20));
+			procurar = new JButton("   Procurar   ");
+			procurar.setFont(new Font("AmericanTypewriter",Font.BOLD,12));
+			codigo = new JTextField(6);
+			JLabel Informacao1 = new JLabel("Favor inserir o código       ");
+			JLabel Informacao2 = new JLabel("  do produto desejado        ");
+			Informacao1.setFont(new Font("TimesRoman",Font.ITALIC,15));
+			Informacao2.setFont(new Font("TimesRoman",Font.ITALIC,15));
+			central.add(Informacao1);
+			central.add(Informacao2);
+			central.add(Box.createVerticalStrut(10));
+			central.add(codigo);
+			central.add(Box.createVerticalStrut(10));
+			central.add(procurar);
+			central.add(Box.createVerticalStrut(60));
+			Box centro = Box.createHorizontalBox();
+			Box direitaCentro = Box.createVerticalBox();
+			NovoPreco = new JTextField(6);
+			NovoNome = new JTextField(6);
+			direitaCentro.add(new JLabel("Nome: "));
+			direitaCentro.add(NovoNome);
+			direitaCentro.add(Box.createVerticalStrut(10));
+			direitaCentro.add(new JLabel("Preco: "));
+			direitaCentro.add(NovoPreco);
+			imagem = new JLabel(new ImageIcon(getClass().getResource("branco.png")));
+			centro.add(imagem);
+			centro.add(Box.createHorizontalStrut(15));
+			centro.add(direitaCentro);
+			central.add(centro);
+			JLabel infor1 = new JLabel("       Insira o que deseja atualizar");
+			infor1.setFont(new Font("TimesRoman",Font.ITALIC,12));
+			central.add(Box.createVerticalStrut(15));
+			central.add(infor1);
+			central.add(Box.createVerticalStrut(100));
+			JPanel embaixo = new JPanel(new FlowLayout());
 			remover = new JButton("Remover");
-			editarPreco = new JButton("Editar Preço");
-			editarNome = new JButton("Editar Nome");
-			box.add(remover);
-			box.add(box.createVerticalStrut(15));
-			box.add(editarPreco);
-			box.add(box.createVerticalStrut(15));
-			box.add(editarNome);
-			this.add(box);
+			remover.setToolTipText("Pressione para remover o produto selecionado");
+			remover.setFont(new Font("TimesRoman",Font.BOLD,16));
+			
+			salvar = new JButton("    Salvar    ");
+			salvar.setFont(new Font("TimesRoman",Font.BOLD,16));
+			salvar.setToolTipText("Pressione para salvar as alterações");
+			
+			Box organizarEmbaixo = Box.createHorizontalBox();
+			organizarEmbaixo.add(Box.createHorizontalStrut(180));
+			organizarEmbaixo.add(salvar);
+			organizarEmbaixo.add(Box.createHorizontalStrut(20));
+			organizarEmbaixo.add(remover);
+			organizarEmbaixo.add(Box.createHorizontalStrut(150));
+			add(central);
+			add(organizarEmbaixo);
+			
+		
 		}
-
 		else {
-			Usuario = new JTextField(15);
-			Box box = Box.createVerticalBox();
-			
-			box.add(box.createVerticalStrut(30));
-			
-			JLabel bemvindo = new JLabel("       Bem Vindo ! ");
-			bemvindo.setFont(new Font("SansSerif",Font.BOLD,30));
-			box.add(bemvindo);
-			box.add(box.createVerticalStrut(10));
-			
-			JPanel org = new JPanel(new FlowLayout());
-			
-			JLabel login = new JLabel(new ImageIcon(getClass().getResource("login.png")));
-
-			org.add(login);
-			box.add(org);
-			
-			box.add(box.createVerticalStrut(30));
-			JLabel digite = new JLabel(" Digite seu usuário e senha para continuar");
-			digite.setFont(new Font("SansSerif",Font.BOLD,15));
-			box.add(digite);
-			
-			box.add(box.createVerticalStrut(10));
-			
-
-			JPanel logarU = new JPanel(new FlowLayout());
-			logarU.add(new JLabel(new ImageIcon(getClass().getResource("user.png"))));
-			logarU.add(Usuario);
-			box.add(logarU);
-
-			JPanel logarS = new JPanel(new FlowLayout());
-			senha = new JPasswordField(15);
-			logarS.add(new JLabel(new ImageIcon(getClass().getResource("cadeado.png"))));
-			logarS.add(senha);
-			box.add(logarS);
-			box.add(box.createVerticalStrut(150));
-			
-			this.add(box.createVerticalStrut(30), BorderLayout.WEST);
-			this.add(box.createVerticalStrut(30), BorderLayout.EAST);
-			
-			JTextArea txt = new JTextArea("Acesso restrito, apenas pessoal autorizado");
-			txt.setFont(new Font("Serif",Font.BOLD,20));
-			txt.setEditable(false);
-			txt.setBackground(this.getBackground());
-			txt.setSelectionColor(this.getBackground());
-			
-			this.add(box, BorderLayout.CENTER);
-			this.add(txt,BorderLayout.SOUTH);
-		}
+			login = new Login();
+			add(login,BorderLayout.CENTER);
+		}	
 
 	}
 

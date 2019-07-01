@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,7 +28,7 @@ public class ConfirmarCompra extends JFrame {
 
 	public ConfirmarCompra() {
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		super("Confirmação");
 		setSize(250, 250);
 		setVisible(true);
 		setResizable(false);
@@ -38,7 +39,9 @@ public class ConfirmarCompra extends JFrame {
 		cartao = new JTextField(4);
 		senha = new JPasswordField(4);
 		Finalizar = new JButton("Finalizar Compra");	
+		Finalizar.setFont(new Font("AmericanTypewriter",Font.ITALIC,12));
      	Cancelar = new JButton("Cancelar");
+     	Cancelar.setFont(new Font("AmericanTypewriter",Font.ITALIC,12));
 		Cancelar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent x) {
@@ -48,21 +51,25 @@ public class ConfirmarCompra extends JFrame {
 		});
 
 		Box Nome = Box.createHorizontalBox();
+		Nome.add(Box.createHorizontalStrut(15));
 		Nome.add(nome);
 		Nome.add(Box.createHorizontalStrut(10));
 		Nome.add(new JLabel("Nome     "));
 
 		Box Cpf = Box.createHorizontalBox();
+		Cpf.add(Box.createHorizontalStrut(15));
 		Cpf.add(cpf);
 		Cpf.add(Box.createHorizontalStrut(10));
 		Cpf.add(new JLabel("CPF         "));
 
 		Box Cartao = Box.createHorizontalBox();
+		Cartao.add(Box.createHorizontalStrut(15));
 		Cartao.add(cartao);
 		Cartao.add(Box.createHorizontalStrut(10));
 		Cartao.add(new JLabel("CD Cartão           "));
 
 		Box Senha = Box.createHorizontalBox();
+		Senha.add(Box.createHorizontalStrut(15));
 		Senha.add(senha);
 		Senha.add(Box.createHorizontalStrut(10));
 		Senha.add(new JLabel("Senha                                            "));
@@ -77,7 +84,8 @@ public class ConfirmarCompra extends JFrame {
 		JTextArea texto = new JTextArea();
 		texto.setEditable(false);
 		texto.setSelectionColor(this.getBackground());
-		texto.setText("   Por favor insira seus\n   dados para continuar");
+		texto.setText("   	Por favor insira seus\n	dados para continuar");
+		texto.setFont(new Font("TimesRoman",Font.ITALIC,13));
 		texto.setBackground(this.getBackground());
 		b.add(texto);
 		b.add(Box.createVerticalStrut(10));

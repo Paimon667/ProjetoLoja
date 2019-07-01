@@ -3,6 +3,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.File;
 
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -66,10 +67,13 @@ public class Produto extends JPanel implements ProdutoGenerico {
 		this.imagem=imagem;
 		this.comprar=botaocomprar;
 		setLayout(new FlowLayout());
+		Box organizador = Box.createVerticalBox();
 		texto = new JLabel(this.Nome+"    R$: "+this.Preco);
-		texto.setFont(new Font("AppleGhotic",Font.PLAIN,12));
-		add(botaocomprar);
-		add(texto);
+		texto.setFont(new Font("TimesRoman",Font.BOLD,16));
+		organizador.add(this.comprar);
+		organizador.add(Box.createVerticalStrut(10));
+		organizador.add(this.texto);
+		add(organizador);
 		
 	}
 	
