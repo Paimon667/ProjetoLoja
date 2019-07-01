@@ -104,11 +104,17 @@ public class Adicionar extends JPanel {
 			arquivo.showOpenDialog(null);
 			file = arquivo.getSelectedFile();
 			try {
+				if(new ImageIcon(file.getPath()).getIconHeight()!=50 || new ImageIcon(file.getPath()).getIconWidth()!=50){
+					throw new Exception();
+				}
 				ImgEscolhida.setText("");
 				ImgEscolhida.setIcon(new ImageIcon(file.getPath()));
 			} catch (NullPointerException erro) {
 				ImgEscolhida.setIcon(null);
 				ImgEscolhida.setText("");
+			}
+			catch(Exception imagemerro) {
+				JOptionPane.showMessageDialog(null, "A imagem selecionada não comporta as dimensões permitidas","Erro na imagem",JOptionPane.ERROR_MESSAGE);
 			}
 
 		}

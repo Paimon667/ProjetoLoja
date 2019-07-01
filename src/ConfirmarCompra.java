@@ -29,7 +29,7 @@ public class ConfirmarCompra extends JFrame {
 	public ConfirmarCompra() {
 
 		super("Confirmação");
-		setSize(250, 250);
+		setSize(250, 300);
 		setVisible(true);
 		setResizable(false);
 		setLayout(new BorderLayout());
@@ -74,11 +74,18 @@ public class ConfirmarCompra extends JFrame {
 		Senha.add(Box.createHorizontalStrut(10));
 		Senha.add(new JLabel("Senha                                            "));
 
+		Box email = Box.createHorizontalBox();
+		email.add(Box.createHorizontalStrut(15));
+		email.add(new JTextField(6));
+		email.add(Box.createHorizontalStrut(10));
+		email.add(new JLabel("Email             "));
+		
 		Box Botoes = Box.createHorizontalBox();
 		Botoes.add(Box.createHorizontalStrut(10));
 		Botoes.add(Finalizar);
 		Botoes.add(Box.createHorizontalStrut(10));
 		Botoes.add(Cancelar);
+		
 
 		b.add(Box.createVerticalStrut(17));
 		JTextArea texto = new JTextArea();
@@ -92,6 +99,8 @@ public class ConfirmarCompra extends JFrame {
 		b.add(Nome);
 		b.add(Box.createVerticalStrut(10));
 		b.add(Cpf);
+		b.add(Box.createVerticalStrut(10));
+		b.add(email);
 		b.add(Box.createVerticalStrut(10));
 		b.add(Cartao);
 		b.add(Box.createVerticalStrut(10));

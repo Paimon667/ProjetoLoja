@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -32,61 +33,85 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import com.sun.glass.events.WindowEvent;
+import com.sun.prism.Image;
 
 public class JanelaPrincipal extends JFrame implements Serializable {
 
-	Map<Integer, Produto> produtoz; // produtos que tem no catalogo
+	Map<Integer, Produto> produtoz;  // produtos que tem no catalogo
 	ArrayList<Produto> selecionados; // produtos que estao no carrinho do cliente
-	Catalogo catalogo; // panel catalogo que exibe os produtos
-	Adicionar adicionar; // panel adicionar para adicionar novos produtos
-	Carrinho carrinho; // panel carrinho para ver os produtos escolhidos e seu preco final
-	RemoverEditar edit; // panel para remover ou editar produtos
-	JTabbedPane abas; // as abas para fixar os panels no frame principal (esse)
-	boolean AcessoGerente; // boolean permitindo acesso a funcoes especiais (editar/remover/adicionar)
-	JMenu MenuPrincipal; // um menu para adicionar as opicoes
-	JMenuItem salvar; // opcao de salvar no menu principal
-	JMenuItem apagar; // opcao de apagar no menu principal
-	JMenuBar menu; // menu principal
-	int posicao = 404; // posiï¿½ï¿½o inicial ï¿½ usada no procurar produto na aba editar para dar erro
-						// caso
-						// nï¿½o encontre o produto
-	boolean primeiraExec;
+	Catalogo catalogo; 				 // panel catalogo que exibe os produtos
+	Adicionar adicionar;             // panel adicionar para adicionar novos produtos
+	Carrinho carrinho;               // panel carrinho para ver os produtos escolhidos e seu preco final
+	RemoverEditar edit;              // panel para remover ou editar produtos
+	JTabbedPane abas;                // as abas para fixar os panels no frame principal (esse)
+	boolean AcessoGerente;           // boolean permitindo acesso a funcoes especiais (editar/remover/adicionar)
+	JMenu MenuPrincipal;             // um menu para adicionar as opções
+	JMenuItem salvar;                // opção de salvar no menu principal
+	JMenuItem apagar;                // opção de apagar no menu principal
+	JMenuItem ConectarDesconectar;
+	JMenuBar menu;                   // menu principal
+	int posicao = 404;               // posição padrão para lançar uma exceção em um método específico, somente é alterado quando há sucesso
+									 // na busca de um item na aba editar
+	boolean primeiraExec;			 // boolean sobre a primeira execução, evitando pegar o foco da janela atual (sendo que nem instanciadas foram)
 
 	public JanelaPrincipal() {
-
-		// instancio os objectos e coloco-os em seus devidos lugares
-		super("Sistema digital da P.O.S");
+		
+		super("Sistema digital da PruuChau");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(600, 600);
 		this.setResizable(false);
+		//coloco icone no frame
+		java.awt.Image iconePrincipal = Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png"));
+		this.setIconImage(iconePrincipal);
+		//tento ler um arquivo contendo o "save" dos produtos do catalogo e do carrinho
 		try {
 			ObjectInputStream ler = new ObjectInputStream(new FileInputStream("Save.ser"));
 			Save backup = (Save) ler.readObject();
+			//se não houver erros durante esse passo todos os produtos encontrados no "save" são carregados para o Frame usa-los
 			produtoz = backup.produtoz;
 			selecionados = backup.selecionados;
+			// os botoes de comprar estavam perdendo ações ao serem lidos, ai readicionamos suas ações
 			for (int i : produtoz.keySet()) {
 				produtoz.get(i).getComprar().addActionListener(new AdicionarCarrinho());
 			}
-			// os botoes de comprar estaavm perdendo ações ao serem lidos, ai readicionamos
-			// quando é lido
+		//se não puder ler o arquivo de save, os atributos são instanciados como vazios.
 		} catch (Exception x) {
 			produtoz = new HashMap<Integer, Produto>();
 			selecionados = new ArrayList<Produto>();
 		} finally {
+		//com ou sem leitura o programa termina o construtor instanciando as partes principais do programa e atribuindo algumas ações
 			abas = new JTabbedPane();
 			AcessoGerente = false;
 			MenuPrincipal = new JMenu("Opções");
 			salvar = new JMenuItem("Salvar");
 			apagar = new JMenuItem("Apagar");
+			ConectarDesconectar = new JMenuItem("Conectar/Desconectar");
+			ConectarDesconectar.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent x) {
+					
+					if(AcessoGerente) {
+						AcessoGerente = false;
+						JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Desconectado com sucesso","Desconetado",JOptionPane.INFORMATION_MESSAGE);
+						A();
+					}
+					else if (AcessoGerente == false){
+						abas.setSelectedComponent(adicionar);
+					}
+					
+				}
+
+			});
 			MenuPrincipal.add(salvar);
 			MenuPrincipal.add(apagar);
+			MenuPrincipal.add(ConectarDesconectar);
 			menu = new JMenuBar();
 			menu.add(MenuPrincipal);
 			salvar.addActionListener(new BotoesMenu());
 			apagar.addActionListener(new BotoesMenu());
 			setJMenuBar(menu);
 			primeiraExec = true;
-			A();
+			A(); // método que remove todos os panels (se primeiraExec for falso) e instancia-os novamente, funcionando como um modo de atualização
 			primeiraExec = false;
 			this.add(abas);
 		}
@@ -102,6 +127,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 	// reinstancia todos os panels e adiciona-os as abas novamente
 	// se for a primeira execucao ele não remove as abas pois elas nem foram
 	// adicionadas
+	// serve para atualizar o programa toda vez que algo importante é feito
 	public void A() {
 		int foco = abas.getSelectedIndex();
 		if (primeiraExec == false) {
@@ -157,9 +183,9 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		}
 	}
 
-	// recebe todos os valores colocados nos campos de digitaï¿½ï¿½o da aba
-	// Adicionar e
-	// cria um produto, caso algo seja preenchido incorretamente ele dï¿½ erro
+	// recebe todos os valores colocados nos campos de digitação da aba adicionar e
+	// então cria um produto com suas informações e reexecuta o método "A", de atualização, mas somente fará isso se respeitar as condições
+	// todos dados estarem de acordo com o requisitado e também se e somente houver menos de 9 produtos no catalogo.
 	public class AdicionarAdd implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -170,9 +196,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				}
 				try {
 					if (adicionar.ImgEscolhida.getIcon() == null || nome.length() < 3
-							|| adicionar.campo[1].getText().length() == 0 || adicionar.campo[2].getText().length() == 0
-							|| adicionar.ImgEscolhida.getIcon().getIconHeight() != 50
-							|| adicionar.ImgEscolhida.getIcon().getIconWidth() != 50) {
+							|| adicionar.campo[1].getText().length() == 0
+							|| adicionar.campo[2].getText().length() == 0) {
 						throw new Exception();
 					}
 					int preco = Integer.parseInt(adicionar.campo[1].getText());
@@ -189,24 +214,16 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 							"Algum dos valores correspondentes ao\npreco ou codigo foram preenchidos\nincorretamente",
 							"Valor inválido", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception erro) {
-					if (adicionar.ImgEscolhida.getIcon().getIconHeight() != 50
-							|| adicionar.ImgEscolhida.getIcon().getIconWidth() != 50) {
-						JOptionPane.showMessageDialog(adicionar,
-								"A imagem nao comporta o tamanho especificado nas restrições", "Imagem Incompátivel",
-								JOptionPane.ERROR_MESSAGE);
-						adicionar.ImgEscolhida.setIcon(null);
-					} else {
-						JOptionPane.showMessageDialog(adicionar, "Favor insira um valor nos campos em branco",
-								"Campos sem valores", JOptionPane.ERROR_MESSAGE);
-						if (nome.length() < 3) {
-							adicionar.palavras[0].setForeground(Color.red);
-						}
-						if (adicionar.campo[1].getText().length() == 0) {
-							adicionar.palavras[1].setForeground(Color.red);
-						}
-						if (adicionar.campo[2].getText().length() == 0) {
-							adicionar.palavras[2].setForeground(Color.red);
-						}
+					JOptionPane.showMessageDialog(adicionar, "Favor insira algo nos campos em branco",
+							"Campos sem valores", JOptionPane.ERROR_MESSAGE);
+					if (nome.length() < 3) {
+						adicionar.palavras[0].setForeground(Color.red);
+					}
+					if (adicionar.campo[1].getText().length() == 0) {
+						adicionar.palavras[1].setForeground(Color.red);
+					}
+					if (adicionar.campo[2].getText().length() == 0) {
+						adicionar.palavras[2].setForeground(Color.red);
 					}
 				}
 
@@ -216,7 +233,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		}
 	}
 
-	// checa se os valores colocados nos campos de login e senha estï¿½o corretos e
+	// checa se os valores colocados nos campos de login e senha estão corretos e
 	// altera a variavel acesso gerente para true caso sim
 	public class LoginGerente implements ActionListener {
 
@@ -237,12 +254,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		}
 	}
 
-	// lï¿½ o valor colocado no campo de pesquisa e procura o produto em questï¿½o,
-	// se
-	// encontrar, exibirï¿½ seu valor, nome e imagem e serï¿½ permitido alterar algo
-	// dele
-	// caso nï¿½o encontre ele permanece com a posiï¿½ï¿½o 404 definida no inicio do
-	// cï¿½digo para lanï¿½ar uma exceï¿½ï¿½o posteriormente caso tente alterar algo
+	//procura o produto com código correspondente ao digitado na aba editar, caso encontre o mesmo é exibido num Label com sua imagem, ao passar o mouse por cima
+	//seu nome e preço são exibidos,
 	public class editar implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
@@ -360,7 +373,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 
 			String diretorio = EscolheDiretorio.getSelectedFile().getPath();
 			Formatter escrever = new Formatter(diretorio + "/NotaFiscal.txt");
-			escrever.format("%s\n", "----------------------------LOJA P.O.S------------------------");
+			escrever.format("%s\n", "----------------------------LOJA PruuChau---------------------");
 			escrever.format("%s\n%s\n%s\n", "Nome: " + nomeI, "Cartao: " + cartaoI, "CPF: " + cpfI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "                            NOTA FISCAL");
@@ -376,7 +389,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			escrever.format("%s\n", "                                            Total: R$" + precoI);
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "CNPJ: 985.154.584");
-			escrever.format("%s\n", "P.O.S LTDA");
+			escrever.format("%s\n", "PruuChau LTDA");
 			escrever.format("%s\n", "--------------------------------------------------------------");
 			escrever.format("%s\n", "Obrigado pela Preferencia");
 			escrever.close();
@@ -408,14 +421,15 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					}
 					A();
 				} else {
-					JOptionPane.showMessageDialog(null, "Você precisa estar logado para acessar esta função",
-							"Acesso Negado", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(abas.getSelectedComponent(),
+							"Você precisa estar logado para acessar esta função", "Acesso Negado",
+							JOptionPane.ERROR_MESSAGE);
 					abas.setSelectedComponent(adicionar);
 				}
 
 			}
 
-			else  {
+			else {
 				try {
 					ObjectOutputStream escrever = new ObjectOutputStream(new FileOutputStream("Save.ser"));
 					escrever.writeObject(new Save(produtoz, selecionados));
