@@ -22,13 +22,14 @@ public class ConfirmarCompra extends JFrame {
 	public JTextField nome;
 	public JTextField cpf;
 	public JTextField cartao;
+	public JTextField email;
 	public JPasswordField senha;
 	public JButton Finalizar;
 	public JButton Cancelar;
 
 	public ConfirmarCompra() {
 
-		super("ConfirmaÁ„o");
+		super("Confirma√ß√£o");
 		setSize(250, 300);
 		setVisible(true);
 		setResizable(false);
@@ -37,6 +38,7 @@ public class ConfirmarCompra extends JFrame {
 		nome = new JTextField(4);
 		cpf = new JTextField(4);
 		cartao = new JTextField(4);
+		email = new JTextField(6);
 		senha = new JPasswordField(4);
 		Finalizar = new JButton("Finalizar Compra");	
 		Finalizar.setFont(new Font("AmericanTypewriter",Font.ITALIC,12));
@@ -66,7 +68,7 @@ public class ConfirmarCompra extends JFrame {
 		Cartao.add(Box.createHorizontalStrut(15));
 		Cartao.add(cartao);
 		Cartao.add(Box.createHorizontalStrut(10));
-		Cartao.add(new JLabel("CD Cart„o           "));
+		Cartao.add(new JLabel("CD Cart√£o           "));
 
 		Box Senha = Box.createHorizontalBox();
 		Senha.add(Box.createHorizontalStrut(15));
@@ -76,7 +78,7 @@ public class ConfirmarCompra extends JFrame {
 
 		Box email = Box.createHorizontalBox();
 		email.add(Box.createHorizontalStrut(15));
-		email.add(new JTextField(6));
+		email.add(this.email);
 		email.add(Box.createHorizontalStrut(10));
 		email.add(new JLabel("Email             "));
 		

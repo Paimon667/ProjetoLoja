@@ -22,7 +22,7 @@ public class Adicionar extends JPanel {
 	JTextField[] campo;
 	JLabel[] palavras;
 	JPanel[] paineis;
-	String[] strings = { "Nome", "Preco", "Codigo" };
+	String[] strings = { "Nome", "Preco", "Codigo","Info" };
 	JButton Adicionar;
 	JLabel ImgEscolhida;
 	JButton Imagem;
@@ -33,17 +33,17 @@ public class Adicionar extends JPanel {
 	public Adicionar(boolean Gerente) {
 		this.setLayout(new FlowLayout());
 
-		// Se quem acessa ï¿½ o gerente
+		// Se quem acessa Ã© o gerente
 		if (Gerente) {
 			setLayout(new BorderLayout());
-			campo = new JTextField[3];
-			palavras = new JLabel[3];
-			paineis = new JPanel[3];
+			campo = new JTextField[4];
+			palavras = new JLabel[4];
+			paineis = new JPanel[4];
 			Adicionar = new JButton("        Adicionar        ");
 			Adicionar.setFont(new Font("TimesRoman",Font.BOLD,17));
 			Box esquerda = Box.createVerticalBox();
 			esquerda.add(Box.createVerticalStrut(30));
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				palavras[i] = new JLabel(strings[i]);
 				paineis[i] = new JPanel();
 				campo[i] = new JTextField(10);
@@ -68,12 +68,12 @@ public class Adicionar extends JPanel {
 			textoInformativo.setSelectionColor(this.getBackground());
 			textoInformativo.setBackground(this.getBackground());
 			textoInformativo.setFont(new Font("TimesRoman",Font.ITALIC,15));
-			textoInformativo.setText("\n\nSomente será aceito imagens            "
+			textoInformativo.setText("\n\nSomente serÃ¡ aceito imagens            "
 					+ "\ncom o formato de 50x50 pixels     "
-					+ "\n\nProdutos com códigos iguais"
-					+ "\nserão substituidos       "
-					+ "\n\nLimite máximo de produtos é 9 "
-					+ "\nacima disso será desconsiderado ");
+					+ "\n\nProdutos com cÃ³digos iguais"
+					+ "\nserÃ£o substituidos       "
+					+ "\n\nLimite mÃ¡ximo de produtos Ã© 9 "
+					+ "\nacima disso serÃ¡ desconsiderado ");
 			
 			this.add(textoInformativo,BorderLayout.EAST);
 			Box OrganizarBotaoAdd = Box.createHorizontalBox();
@@ -114,7 +114,7 @@ public class Adicionar extends JPanel {
 				ImgEscolhida.setText("");
 			}
 			catch(Exception imagemerro) {
-				JOptionPane.showMessageDialog(null, "A imagem selecionada não comporta as dimensões permitidas","Erro na imagem",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "A imagem selecionada nÃ£o comporta as dimensÃµes permitidas","Erro na imagem",JOptionPane.ERROR_MESSAGE);
 			}
 
 		}

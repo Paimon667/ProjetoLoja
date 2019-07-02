@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class Produto extends JPanel implements ProdutoGenerico {
 
@@ -17,7 +18,8 @@ public class Produto extends JPanel implements ProdutoGenerico {
 	private int Codigo;
 	JButton comprar;
 	private String imagem;
-	public JLabel texto; 
+	public String info;
+	public JTextArea texto;
 
 	public String getNome() {
 		return this.Nome;
@@ -60,17 +62,24 @@ public class Produto extends JPanel implements ProdutoGenerico {
 	}
 
 	
-	public Produto(String nome, int preco, int codigo, JButton botaocomprar,String imagem) {
+	public Produto(String nome, int preco, int codigo, JButton botaocomprar,String imagem,String info) {
 		this.Nome=nome;
 		this.Preco=preco;
 		this.Codigo=codigo; 
 		this.imagem=imagem;
 		this.comprar=botaocomprar;
+		this.info=info;
 		setLayout(new FlowLayout());
 		Box organizador = Box.createVerticalBox();
-		texto = new JLabel(this.Nome+"    R$: "+this.Preco);
-		texto.setFont(new Font("TimesRoman",Font.BOLD,16));
-		organizador.add(this.comprar);
+		Box organizaBotao = Box.createHorizontalBox();
+		texto = new JTextArea("R$: "+this.Preco+"\n"+this.Nome+"\n"+this.info);
+		texto.setEditable(false);
+		texto.setSelectedTextColor(this.getBackground());
+		texto.setBackground(this.getBackground());
+		texto.setFont(new Font("TimesRman",Font.BOLD,14));
+		organizaBotao.add(this.comprar);
+		organizaBotao.add(Box.createHorizontalStrut(5));
+		organizador.add(organizaBotao);
 		organizador.add(Box.createVerticalStrut(10));
 		organizador.add(this.texto);
 		add(organizador);

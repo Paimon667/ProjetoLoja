@@ -35,7 +35,7 @@ public class Login extends JPanel {
 		box.add(org);
 
 		box.add(box.createVerticalStrut(30));
-		JLabel digite = new JLabel(" Digite seu usuario e senha para continuar");
+		JLabel digite = new JLabel(" Digite seu usuário e senha para continuar");
 		digite.setFont(new Font("SansSerif", Font.BOLD, 15));
 		box.add(digite);
 

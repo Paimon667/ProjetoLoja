@@ -31,7 +31,7 @@ public class Carrinho extends JPanel {
 		int i = 0;
 		if (produtos.size() > 0) { 
 			for (Produto p : produtos) {
-				produtoz[i] = p.getNome()+"                                                       ";
+				produtoz[i] = p.getCodigo()+" - "+p.getNome()+"                                                       ";
 				char[] arrumar = produtoz[i].toCharArray();
 				arrumar[40]='R';
 				arrumar[41]='$';
@@ -49,7 +49,6 @@ public class Carrinho extends JPanel {
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setFixedCellHeight(20);
 		lista.setFixedCellWidth(175);
-		lista.setToolTipText("Preco show");
 		
 		Box organizar = Box.createHorizontalBox();
 		comprar = new JButton("Comprar");
