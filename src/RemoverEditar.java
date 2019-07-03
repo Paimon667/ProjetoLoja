@@ -53,7 +53,7 @@ public class RemoverEditar extends JPanel {
 			direitaCentro.add(new JLabel("Nome: "));
 			direitaCentro.add(NovoNome);
 			direitaCentro.add(Box.createVerticalStrut(10));
-			direitaCentro.add(new JLabel("Preco: "));
+			direitaCentro.add(new JLabel("Preço: "));
 			direitaCentro.add(NovoPreco);
 			direitaCentro.add(Box.createVerticalStrut(10));
 			direitaCentro.add(new JLabel("Informações: "));
@@ -69,7 +69,6 @@ public class RemoverEditar extends JPanel {
 			central.add(Box.createVerticalStrut(15));
 			central.add(infor1);
 			central.add(Box.createVerticalStrut(100));
-			JPanel embaixo = new JPanel(new FlowLayout());
 			remover = new JButton("Remover");
 			remover.setToolTipText("Pressione para remover o produto selecionado");
 			remover.setFont(new Font("TimesRoman",Font.BOLD,16));

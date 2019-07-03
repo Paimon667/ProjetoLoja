@@ -22,7 +22,7 @@ public class Adicionar extends JPanel {
 	public JTextField[] campo;
 	public JLabel[] palavras;
 	public JPanel[] paineis;
-	private String[] strings = { "Nome", "Preco", "Cod  ","Info  " };
+	private String[] strings = { "Nome", "Preço", "Cod. ","Info. " };
 	public JButton Adicionar;
 	public JLabel ImgEscolhida;
 	private JButton Imagem;
@@ -33,7 +33,7 @@ public class Adicionar extends JPanel {
 	public Adicionar(boolean Gerente) {
 		this.setLayout(new FlowLayout());
 
-		// Se quem acessa Ã© o gerente
+		// Só quem acessa é o gerente
 		if (Gerente) {
 			setLayout(new BorderLayout());
 			campo = new JTextField[4];
@@ -71,7 +71,7 @@ public class Adicionar extends JPanel {
 			textoInformativo.setText("\n\nSomente serão aceitas imagens            "
 					+ "\ncom o formato de 50x50 pixels     "
 					+ "\n\nProdutos com códigos iguais"
-					+ "\nserão substituidos       "
+					+ "\nserão substituídos       "
 					+ "\n\nLimite máximo de produtos são 9 "
 					+ "\nacima disso será desconsiderado ");
 			

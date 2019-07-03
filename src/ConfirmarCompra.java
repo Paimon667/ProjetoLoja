@@ -80,7 +80,7 @@ public class ConfirmarCompra extends JFrame {
 
 	public ConfirmarCompra() {
 
-		super("ConfirmaÃ§Ã£o");
+		super("Confirmação");
 		setSize(250, 300);
 		setVisible(true);
 		setResizable(false);
