@@ -12,8 +12,29 @@ import javax.swing.JTextField;
 
 public class Login extends JPanel {
 
-	JTextField Usuario;
-	JPasswordField senha;
+	private JTextField Usuario;
+	private JPasswordField senha;
+	
+
+	public JTextField getUsuario() {
+		return Usuario;
+	}
+
+
+	public void setUsuario(JTextField usuario) {
+		Usuario = usuario;
+	}
+
+
+	public JPasswordField getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(JPasswordField senha) {
+		this.senha = senha;
+	}
+
 
 	public Login() {
 		setLayout(new BorderLayout());

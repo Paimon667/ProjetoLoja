@@ -19,14 +19,14 @@ import javax.swing.JTextField;
 
 public class Adicionar extends JPanel {
 
-	JTextField[] campo;
-	JLabel[] palavras;
-	JPanel[] paineis;
-	String[] strings = { "Nome", "Preco", "Codigo","Info" };
-	JButton Adicionar;
-	JLabel ImgEscolhida;
-	JButton Imagem;
-	File file;
+	public JTextField[] campo;
+	public JLabel[] palavras;
+	public JPanel[] paineis;
+	private String[] strings = { "Nome", "Preco", "Cod  ","Info  " };
+	public JButton Adicionar;
+	public JLabel ImgEscolhida;
+	private JButton Imagem;
+	public File file;
 	///
 	Login login;
 
@@ -68,12 +68,12 @@ public class Adicionar extends JPanel {
 			textoInformativo.setSelectionColor(this.getBackground());
 			textoInformativo.setBackground(this.getBackground());
 			textoInformativo.setFont(new Font("TimesRoman",Font.ITALIC,15));
-			textoInformativo.setText("\n\nSomente ser√° aceito imagens            "
+			textoInformativo.setText("\n\nSomente ser„o aceitas imagens            "
 					+ "\ncom o formato de 50x50 pixels     "
-					+ "\n\nProdutos com c√≥digos iguais"
-					+ "\nser√£o substituidos       "
-					+ "\n\nLimite m√°ximo de produtos √© 9 "
-					+ "\nacima disso ser√° desconsiderado ");
+					+ "\n\nProdutos com cÛdigos iguais"
+					+ "\nser„o substituidos       "
+					+ "\n\nLimite m·ximo de produtos s„o 9 "
+					+ "\nacima disso ser· desconsiderado ");
 			
 			this.add(textoInformativo,BorderLayout.EAST);
 			Box OrganizarBotaoAdd = Box.createHorizontalBox();

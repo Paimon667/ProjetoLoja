@@ -19,13 +19,64 @@ import javax.swing.JTextField;
 
 public class ConfirmarCompra extends JFrame {
 
-	public JTextField nome;
-	public JTextField cpf;
-	public JTextField cartao;
-	public JTextField email;
-	public JPasswordField senha;
+	private JTextField nome;
+	private JTextField cpf;
+	private JTextField cartao;
+	private JTextField email;
+	private JPasswordField senha;
 	public JButton Finalizar;
 	public JButton Cancelar;
+	
+
+	public JTextField getNome() {
+		return nome;
+	}
+
+
+	public void setNome(JTextField nome) {
+		this.nome = nome;
+	}
+
+
+	public JTextField getCpf() {
+		return cpf;
+	}
+
+
+	public void setCpf(JTextField cpf) {
+		this.cpf = cpf;
+	}
+
+
+	public JTextField getCartao() {
+		return cartao;
+	}
+
+
+	public void setCartao(JTextField cartao) {
+		this.cartao = cartao;
+	}
+
+
+	public JTextField getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(JTextField email) {
+		this.email = email;
+	}
+
+
+	public JPasswordField getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(JPasswordField senha) {
+		this.senha = senha;
+	}
+
 
 	public ConfirmarCompra() {
 

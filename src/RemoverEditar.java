@@ -13,15 +13,15 @@ import javax.swing.JTextField;
 
 public class RemoverEditar extends JPanel {
 
-	JTextField codigo;
-	JButton remover;
-	JButton salvar;
-	JTextField NovoNome;
-	JTextField NovoPreco;
-	JTextField NovaInfo;
-	Login login;
-	JButton procurar;
-	JLabel imagem;
+	public JTextField codigo;
+	public JButton remover;
+	public JButton salvar;
+	public JTextField NovoNome;
+	public JTextField NovoPreco;
+	public JTextField NovaInfo;
+	public Login login;
+	public JButton procurar;
+	public JLabel imagem;
 
 	public RemoverEditar(boolean Gerente) {
 
@@ -33,7 +33,7 @@ public class RemoverEditar extends JPanel {
 			procurar = new JButton("   Procurar   ");
 			procurar.setFont(new Font("AmericanTypewriter",Font.BOLD,12));
 			codigo = new JTextField(6);
-			JLabel Informacao1 = new JLabel("Favor inserir o cÃ³digo       ");
+			JLabel Informacao1 = new JLabel("Favor inserir o código       ");
 			JLabel Informacao2 = new JLabel("  do produto desejado        ");
 			Informacao1.setFont(new Font("TimesRoman",Font.ITALIC,15));
 			Informacao2.setFont(new Font("TimesRoman",Font.ITALIC,15));
@@ -56,7 +56,7 @@ public class RemoverEditar extends JPanel {
 			direitaCentro.add(new JLabel("Preco: "));
 			direitaCentro.add(NovoPreco);
 			direitaCentro.add(Box.createVerticalStrut(10));
-			direitaCentro.add(new JLabel("InformaÃ§Ãµes: "));
+			direitaCentro.add(new JLabel("Informações: "));
 			direitaCentro.add(NovaInfo);
 
 			imagem = new JLabel(new ImageIcon(getClass().getResource("branco.png")));
@@ -76,7 +76,7 @@ public class RemoverEditar extends JPanel {
 			
 			salvar = new JButton("    Salvar    ");
 			salvar.setFont(new Font("TimesRoman",Font.BOLD,16));
-			salvar.setToolTipText("Pressione para salvar as alteraÃ§Ãµes");
+			salvar.setToolTipText("Pressione para salvar as alterações");
 			
 			Box organizarEmbaixo = Box.createHorizontalBox();
 			organizarEmbaixo.add(Box.createHorizontalStrut(180));

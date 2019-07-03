@@ -16,11 +16,11 @@ import javax.swing.ListSelectionModel;
 
 public class Carrinho extends JPanel {
 
-	JList lista;
-	JLabel total;
-	JButton remover;
-	JButton comprar;
-	String[] produtoz;
+	public JList lista;
+	public JLabel total;
+	public JButton remover;
+	public JButton comprar;
+	public String[] produtoz;
 
 	public Carrinho(ArrayList<Produto> produtos) {
 		setLayout(new FlowLayout());

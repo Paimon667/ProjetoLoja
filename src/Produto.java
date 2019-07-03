@@ -16,10 +16,30 @@ public class Produto extends JPanel implements ProdutoGenerico {
 	private String Nome;
 	private int Preco;
 	private int Codigo;
-	JButton comprar;
+	private JButton comprar;
 	private String imagem;
-	public String info;
-	public JTextArea texto;
+	private String info;
+	private JTextArea texto;
+	
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public JTextArea getTexto() {
+		return texto;
+	}
+
+	public void setTexto(JTextArea texto) {
+		this.texto = texto;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
 
 	public String getNome() {
 		return this.Nome;

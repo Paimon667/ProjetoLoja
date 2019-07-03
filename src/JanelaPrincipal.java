@@ -37,23 +37,23 @@ import com.sun.prism.Image;
 
 public class JanelaPrincipal extends JFrame implements Serializable {
 
-	Map<Integer, Produto> produtoz; // produtos que tem no catalogo
-	ArrayList<Produto> selecionados; // produtos que estao no carrinho do cliente
-	Catalogo catalogo; // panel catalogo que exibe os produtos
-	Adicionar adicionar; // panel adicionar para adicionar novos produtos
-	Carrinho carrinho; // panel carrinho para ver os produtos escolhidos e seu preco final
-	RemoverEditar edit; // panel para remover ou editar produtos
-	JTabbedPane abas; // as abas para fixar os panels no frame principal (esse)
-	boolean AcessoGerente; // boolean permitindo acesso a funcoes especiais (editar/remover/adicionar)
-	JMenu MenuPrincipal; // um menu para adicionar as opções
-	JMenuItem salvar; // opção de salvar no menu principal
-	JMenuItem apagar; // opção de apagar no menu principal
-	JMenuItem ConectarDesconectar;
-	JMenuBar menu; // menu principal
-	int posicao = 404; // posição padrão para lançar uma exceção em um método específico, somente é
+	private Map<Integer, Produto> produtoz; // produtos que tem no catalogo
+	private ArrayList<Produto> selecionados; // produtos que estao no carrinho do cliente
+	private Catalogo catalogo; // panel catalogo que exibe os produtos
+	private Adicionar adicionar; // panel adicionar para adicionar novos produtos
+	private Carrinho carrinho; // panel carrinho para ver os produtos escolhidos e seu preco final
+	private RemoverEditar edit; // panel para remover ou editar produtos
+	private JTabbedPane abas; // as abas para fixar os panels no frame principal (esse)
+	private boolean AcessoGerente; // boolean permitindo acesso a funcoes especiais (editar/remover/adicionar)
+	private JMenu MenuPrincipal; // um menu para adicionar as opções
+	private JMenuItem salvar; // opção de salvar no menu principal
+	private JMenuItem apagar; // opção de apagar no menu principal
+	private JMenuItem ConectarDesconectar;
+	private JMenuBar menu; // menu principal
+	private int posicao = 404; // posição padrão para lançar uma exceção em um método específico, somente é
 						// alterado quando há sucesso
 						// na busca de um item na aba editar
-	boolean primeiraExec; // boolean sobre a primeira execução, evitando pegar o foco da janela atual
+	private boolean primeiraExec; // boolean sobre a primeira execução, evitando pegar o foco da janela atual
 							// (sendo que nem instanciadas foram)
 
 	public JanelaPrincipal() {
@@ -71,8 +71,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			Save backup = (Save) ler.readObject();
 			// se não houver erros durante esse passo todos os produtos encontrados no
 			// "save" são carregados para o Frame usa-los
-			produtoz = backup.produtoz;
-			selecionados = backup.selecionados;
+			produtoz = backup.getProdutoz();
+			selecionados = backup.getSelecionados();
 			// os botoes de comprar estavam perdendo ações ao serem lidos, ai readicionamos
 			// suas ações
 			for (int i : produtoz.keySet()) {
@@ -154,8 +154,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					c.Finalizar.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent y) {
-							CriarNotaFiscal(c.nome.getText(), c.cpf.getText(), c.cartao.getText(), c.senha.getText(), c,
-									c.email.getText());
+							CriarNotaFiscal(c.getNome().getText(), c.getCpf().getText(), c.getCartao().getText(), c.getSenha().getText(), c,
+									c.getEmail().getText());
 						}
 
 					});
@@ -179,8 +179,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			edit.remover.addActionListener(new editar());
 			edit.salvar.addActionListener(new editar());
 		} else {
-			adicionar.login.senha.addActionListener(new LoginGerente());
-			edit.login.senha.addActionListener(new LoginGerente());
+			adicionar.login.getSenha().addActionListener(new LoginGerente());
+			edit.login.getSenha().addActionListener(new LoginGerente());
 		}
 		abas.addTab("Carrinho", carrinho);
 		abas.addTab("Adicionar", adicionar);
@@ -270,8 +270,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			String login = "azul";
 			String senha = "123";
 
-			if ((adicionar.login.Usuario.getText().equals(login) && adicionar.login.senha.getText().equals(senha))
-					|| edit.login.Usuario.getText().equals(login) && edit.login.senha.getText().equals(senha)) {
+			if ((adicionar.login.getUsuario().getText().equals(login) && adicionar.login.getSenha().getText().equals(senha))
+					|| edit.login.getUsuario().getText().equals(login) && edit.login.getSenha().getText().equals(senha)) {
 				AcessoGerente = true;
 				JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Login efetuado com sucesso");
 				A();
@@ -317,10 +317,10 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 							produtoz.get(posicao).setNome(edit.NovoNome.getText());
 						}
 						if(edit.NovaInfo.getText().length() !=0) {
-							produtoz.get(posicao).info=edit.NovaInfo.getText();
+							produtoz.get(posicao).setInfo(edit.NovaInfo.getText());
 						}
-						produtoz.get(posicao).texto.setText("R$: "+produtoz.get(posicao).getPreco()+
-								"\n"+produtoz.get(posicao).getNome()+"\n"+produtoz.get(posicao).info);
+						produtoz.get(posicao).getTexto().setText(("R$: "+produtoz.get(posicao).getPreco()+
+								"\n"+produtoz.get(posicao).getNome()+"\n"+produtoz.get(posicao).getInfo()));
 						posicao = 404;
 						A();
 
@@ -328,8 +328,8 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				}
 			} catch (NumberFormatException erro) {
 				JOptionPane.showMessageDialog(edit,
-						"O Valor inserido em algum dos campos númericos\nfoi digitado incorretamente",
-						"Caráteres inválidos", JOptionPane.ERROR_MESSAGE);
+						"O Valor inserido em algum dos campos num�ricos\nfoi digitado incorretamente",
+						"Caracteres inv�lidos", JOptionPane.ERROR_MESSAGE);
 			} catch (Exception erro2) {
 				JOptionPane.showMessageDialog(edit, "Nenhum produto foi selecionado", "Sem produto selecionado",
 						JOptionPane.ERROR_MESSAGE);
