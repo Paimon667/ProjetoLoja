@@ -109,7 +109,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			MenuPrincipal.add(apagar);
 			MenuPrincipal.add(ConectarDesconectar);
 			menu = new JMenuBar();
-			// adicionando o menu opções ao menu principal
+		// adicionando o menu opções ao menu principal
 			menu.add(MenuPrincipal); 
 			salvar.addActionListener(new BotoesMenu()); 
 			apagar.addActionListener(new BotoesMenu());

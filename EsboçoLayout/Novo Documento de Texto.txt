@@ -1,0 +1,2 @@
+S.V = strut vertical = estrutura vertical
+S.H = strut horizontal = estrutura horizontal
