@@ -96,7 +96,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 						AcessoGerente = false;
 						JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Desconectado com sucesso",
 								"Desconetado", JOptionPane.INFORMATION_MESSAGE);
-						A();
+						Atualizar();
 					} else if (AcessoGerente == false) {
 						abas.setSelectedComponent(adicionar);
 					}
@@ -115,7 +115,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			apagar.addActionListener(new BotoesMenu());
 			setJMenuBar(menu);
 			primeiraExec = true;
-			A(); // método de atualização dos panels, remove todos os componentes e os reinstancia sem perder os atributos
+			Atualizar(); // método de atualização dos panels, remove todos os componentes e os reinstancia sem perder os atributos
 				 // quando algum item for modificado em qualquer lugar
 			primeiraExec = false;
 			this.add(abas);
@@ -133,7 +133,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 	// se for a primeira execucao ele não remove as abas pois elas nem foram
 	// adicionadas
 	// serve para atualizar o programa toda vez que algo importante é feito
-	public void A() {
+	public void Atualizar() {
 		int foco = abas.getSelectedIndex();
 		if (primeiraExec == false) {
 			abas.remove(catalogo);
@@ -172,7 +172,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 		adicionar = new Adicionar(AcessoGerente);
 		edit = new RemoverEditar(AcessoGerente);
 		if (AcessoGerente) { // há panels que tem certo comportamento quando a variavel gerente for true
-			adicionar.Adicionar.addActionListener(new AdicionarAdd());
+			adicionar.Adicionar.addActionListener(new AdicionarCatalogo());
 			edit.procurar.addActionListener(new editar());
 			edit.remover.addActionListener(new editar());
 			edit.salvar.addActionListener(new editar());
@@ -191,7 +191,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 	// ação do botão Adicionar da aba adicionar
 	// ao ser iniciado ele inicia uma serie de testes para checar os campos preenchidos na aba adicionar
 	// qualquer exceção será tratada, cada qual com sua maneira, sejam erros numéricos, campos vazios ou imagem inválida
-	public class AdicionarAdd implements ActionListener {
+	public class AdicionarCatalogo implements ActionListener {
 
 		public void actionPerformed(ActionEvent x) {
 			if (produtoz.size() < 9) { // caso o limite de produtos não seja excedido, caso sim, ele só atualiza a página
@@ -229,7 +229,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					 
 					// agora cria um produto e executa o método já explicado anteriormente, com as devidas informações
 					AdicionarProduto(new Produto(nome, preco, codigo, botao, adicionar.file.getPath(),adicionar.campo[3].getText()));
-					A(); // atualiza o sistema.
+					Atualizar(); // atualiza o sistema.
 
 				} catch (NumberFormatException y) {
 					if (problema == 1) {
@@ -273,7 +273,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					|| edit.login.getUsuario().getText().equals(login) && edit.login.getSenha().getText().equals(senha)) {
 				AcessoGerente = true;
 				JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Login efetuado com sucesso");
-				A();
+				Atualizar();
 			} else {
 				JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Usuario ou senha invalido");
 			}
@@ -307,7 +307,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					}
 					if (x.getSource() == edit.remover) {
 						produtoz.remove(posicao);
-						A();
+						Atualizar();
 					} else {
 						if (edit.NovoPreco.getText().length() > 0) {
 							produtoz.get(posicao).setPreco(Integer.parseInt(edit.NovoPreco.getText()));
@@ -321,7 +321,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 						produtoz.get(posicao).getTexto().setText(("R$: "+produtoz.get(posicao).getPreco()+
 								"\n"+produtoz.get(posicao).getNome()+"\n"+produtoz.get(posicao).getInfo()));
 						posicao = 404;
-						A();
+						Atualizar();
 
 					}
 				}
@@ -347,7 +347,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					// compara o código de cada produto do carrinho com a primeira String antes do primeiro espaço (onde está o código) na lista
 					if (p.getCodigo()== Integer.parseInt(carrinho.produtoz[carrinho.lista.getSelectedIndex()].split(" ")[0])) {
 						selecionados.remove(p);
-						A();
+						Atualizar();
 						break;
 					}
 				}
@@ -369,7 +369,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 				for (Integer i : produtoz.keySet()) {
 					if (x.getSource() == produtoz.get(i).getComprar()) {
 						selecionados.add(produtoz.get(i));
-						A();
+						Atualizar();
 						break;
 					}
 				}
@@ -459,7 +459,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 			JOptionPane.showMessageDialog(abas.getSelectedComponent(), "Compra efetuada com sucesso");
 			c.dispose();
 			selecionados = new ArrayList<Produto>();
-			A();
+			Atualizar();
 
 		} catch (NumberFormatException erro2) {
 			JOptionPane.showMessageDialog(carrinho, "Valor numérico inválido inserido em algum dos campos", "Erro",
@@ -493,7 +493,7 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 					} catch (Exception y) {
 
 					}
-					A();
+					Atualizar();
 				} else {
 					JOptionPane.showMessageDialog(abas.getSelectedComponent(),
 							"Você precisa estar logado para acessar esta função", "Acesso Negado",
