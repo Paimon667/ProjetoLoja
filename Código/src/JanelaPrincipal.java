@@ -309,6 +309,9 @@ public class JanelaPrincipal extends JFrame implements Serializable {
 						produtoz.remove(posicao);
 						Atualizar();
 					} else {
+						if(Integer.parseInt(edit.NovoPreco.GetText())<=0){
+							throw new NumberFormatException();
+						}
 						if (edit.NovoPreco.getText().length() > 0) {
 							produtoz.get(posicao).setPreco(Integer.parseInt(edit.NovoPreco.getText()));
 						}
